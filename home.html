@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atelier | Admin Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    :root {
+      --accent-gold: #d4af37;
+      --gold-gradient: linear-gradient(135deg, #d4af37 0%, #fcf6ba 45%, #d4af37 100%);
+      --deep-bg: #0a0a0a;
+      --sidebar-bg: #050505;
+      --card-glass: rgba(20, 20, 20, 0.6);
+      --border-gold: rgba(212, 175, 55, 0.2);
+      --text-dim: #888;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        display: flex;
+        background: var(--deep-bg);
+        color: #fff;
+        min-height: 100vh;
+    }
+
+    /* --- SIDEBAR --- */
+    .sidebar {
+        width: 260px;
+        height: 100vh;
+        background: var(--sidebar-bg);
+        border-right: 1px solid var(--border-gold);
+        padding: 40px 20px;
+        position: fixed;
+    }
+
+    .sidebar h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 24px;
+        letter-spacing: 4px;
+        text-align: center;
+        margin-bottom: 50px;
+        background: var(--gold-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .sidebar ul {
+        list-style: none;
+    }
+
+    .sidebar ul a {
+        text-decoration: none;
+        color: var(--text-dim);
+    }
+
+    .sidebar ul li {
+        padding: 15px 20px;
+        margin-bottom: 10px;
+        border-radius: 2px;
+        transition: 0.4s;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .sidebar ul li:hover, .sidebar ul li.active {
+        background: rgba(212, 175, 55, 0.05);
+        color: var(--accent-gold);
+        border-left: 2px solid var(--accent-gold);
+    }
+
+    /* --- MAIN CONTENT --- */
+    .main {
+        margin-left: 260px;
+        padding: 40px;
+        width: calc(100% - 260px);
+        background: radial-gradient(circle at top right, #1a1a1a, #0a0a0a);
+    }
+
+    /* --- HEADER --- */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--border-gold);
+    }
+
+    .header h1 {
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+        font-weight: 400;
+        letter-spacing: 1px;
+    }
+
+    .profile {
+        border: 1px solid var(--accent-gold);
+        color: var(--accent-gold);
+        padding: 8px 20px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        border-radius: 0;
+        background: transparent;
+    }
+
+    /* --- CARDS --- */
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        background: var(--card-glass);
+        padding: 30px;
+        border: 1px solid var(--border-gold);
+        transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        border-color: var(--accent-gold);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .card h3 {
+        font-size: 10px;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 15px;
+    }
+
+    .card p {
+        font-family: 'Playfair Display', serif;
+        font-size: 28px;
+        color: #fff;
+    }
+
+    .card i {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        font-size: 40px;
+        color: var(--accent-gold);
+        opacity: 0.1;
+    }
+
+    /* --- TABLE --- */
+    .table-container {
+        background: var(--card-glass);
+        padding: 40px;
+        border: 1px solid var(--border-gold);
+    }
+
+    .table-container h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5rem;
+        margin-bottom: 25px;
+        color: var(--accent-gold);
+        font-style: italic;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    table th {
+        text-transform: uppercase;
+        font-size: 10px;
+        letter-spacing: 2px;
+        color: var(--accent-gold);
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-gold);
+    }
+
+    table td {
+        padding: 20px 15px;
+        font-size: 13px;
+        color: #ccc;
+        border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+
+    table tr:hover td {
+        background: rgba(212, 175, 55, 0.02);
+        color: #fff;
+    }
+
+    .badge {
+        padding: 4px 10px;
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border: 1px solid;
+    }
+    .status-completed { color: #2ecc71; border-color: rgba(46, 204, 113, 0.3); }
+    .status-pending { color: #f1c40f; border-color: rgba(241, 196, 15, 0.3); }
+
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>ATELIER</h2>
+    <ul>
+        <a href="#"><li class="active"><i class="fa-solid fa-gauge-low"></i> Dashboard</li></a>
+        <a href="/userlist/"><li><i class="fa-solid fa-user-crown"></i> Users</li></a>
+        <a href="#"><li><i class="fa-solid fa-store"></i> Shops</li></a>
+        <a href="/products/"><li><i class="fa-solid fa-box-open"></i> Products</li></a>
+        <a href="#"><li><i class="fa-solid fa-file-invoice-dollar"></i> Reports</li></a>
+        <a href="#"><li><i class="fa-solid fa-compass-drafting"></i> Settings</li></a>
+    </ul>
+</div>
+
+<div class="main">
+
+    <div class="header">
+        <h1>Concierge Intelligence</h1>
+        <div class="profile">Admin Access</div>
+    </div>
+
+    <div class="cards">
+        <div class="card">
+            <h3>Total Users</h3>
+            <p>1,245</p>
+            <i class="fa-solid fa-users"></i>
+        </div>
+        <div class="card">
+            <h3>Revenue</h3>
+            <p>$8,540.00</p>
+            <i class="fa-solid fa-coins"></i>
+        </div>
+        <div class="card">
+            <h3>Active Orders</h3>
+            <p>320</p>
+            <i class="fa-solid fa-receipt"></i>
+        </div>
+        <div class="card">
+            <h3>Total Shops</h3>
+            <p>84</p>
+            <i class="fa-solid fa-shop"></i>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <h2>Recent Inventory Activity</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ref ID</th>
+                    <th>Entity Name</th>
+                    <th>Status</th>
+                    <th>Valuation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#001</td>
+                    <td>John Doe</td>
+                    <td><span class="badge status-completed">Completed</span></td>
+                    <td>$120.00</td>
+                </tr>
+                <tr>
+                    <td>#002</td>
+                    <td>Jane Smith</td>
+                    <td><span class="badge status-pending">Pending</span></td>
+                    <td>$80.00</td>
+                </tr>
+                <tr>
+                    <td>#003</td>
+                    <td>Alex Architecture</td>
+                    <td><span class="badge status-pending">In Review</span></td>
+                    <td>$45.00</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

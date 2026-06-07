@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Atelier | Curated Collection</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --accent-gold: #d4af37;
+  --glass: rgba(15, 15, 15, 0.8);
+  --border: rgba(255, 255, 255, 0.12);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background: url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed;
+    background-size: cover;
+    color:#fff;
+    padding:50px 20px;
+    min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.9) 100%);
+  z-index: -1;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* --- BACK BUTTON (TOP LEFT) --- */
+.nav-header {
+    position: absolute;
+    top: -20px;
+    left: 0;
+}
+
+.back-link {
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+    opacity: 0.7;
+}
+
+.back-link:hover {
+    opacity: 1;
+    color: var(--accent-gold);
+}
+
+/* --- HEADER & SEARCH --- */
+.header{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.header h1{
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.search-container {
+    position: relative;
+    max-width: 500px;
+    margin: 30px auto;
+}
+
+#productSearch {
+    width: 100%;
+    padding: 15px 25px;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    color: white;
+    font-size: 1rem;
+    backdrop-filter: blur(10px);
+    outline: none;
+    transition: 0.3s;
+}
+
+#productSearch:focus {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+}
+
+/* --- GRID --- */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+    gap:30px;
+}
+
+/* --- CARD DESIGN --- */
+.card{
+    background: var(--glass);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow:hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover{
+    transform: translateY(-10px);
+    border-color: var(--accent-gold);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+.card img{
+    width:100%;
+    height:320px;
+    object-fit:cover;
+    transition: 0.5s;
+}
+
+.content{
+    padding:20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.content h3{
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+}
+
+.info{
+    font-size:11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #999;
+    margin-bottom:4px;
+}
+
+.shop-info {
+    font-size: 12px;
+    color: #ccc;
+    margin-top: 5px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.price{
+    margin-top:auto;
+    font-size:20px;
+    font-weight:300;
+    color: var(--accent-gold);
+    padding: 15px 0;
+}
+
+/* --- BUTTONS --- */
+.btn-group {
+    display:flex; 
+    gap:10px;
+}
+
+.btn{
+    flex: 1;
+    padding: 12px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor:pointer;
+    transition: 0.3s;
+    text-align:center;
+    text-decoration:none;
+}
+
+.btn-cart {
+    border: 1px solid var(--border);
+    background: transparent;
+    color: #fff;
+}
+
+.btn-cart:hover {
+    background: #fff;
+    color: #000;
+}
+
+.btn-buy {
+    background: var(--accent-gold);
+    color: #000;
+    border: none;
+}
+
+/* --- EMPTY STATE --- */
+#noResults {
+    display: none;
+    text-align: center;
+    grid-column: 1 / -1;
+    padding: 50px;
+    font-style: italic;
+    opacity: 0.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="nav-header">
+        <a href="javascript:history.back()" class="back-link">
+            <span>←</span> Return
+        </a>
+    </div>
+
+    <div class="header">
+        <h1>The Atelier</h1>
+        <p>Hand-selected pieces for the modern wardrobe</p>
+        
+        <div class="search-container">
+            <input type="text" id="productSearch" placeholder="Search by name, category or shop...">
+        </div>
+    </div>
+
+    <div class="grid" id="productGrid">
+
+        {% for i in products %}
+        <div class="card product-card">
+            {% if i.image %}
+                <img src="{{ i.image.url }}" alt="{{ i.productname }}">
+            {% else %}
+                <img src="https://via.placeholder.com/300x400?text=Atelier+Piece" alt="no image">
+            {% endif %}
+
+            <div class="content">
+                <div class="info category-tag">{{ i.category }}</div>
+                <h3 class="product-title">{{ i.productname }}</h3>
+                
+                <div class="info">Stock: {{ i.quantity }} Units</div>
+                
+                <div class="shop-info">
+                    <span class="shop-name">Store: <strong>{{ i.shop.shopname }}</strong></span><br>
+                    <span style="font-size: 10px; opacity: 0.7;">📍 {{ i.shop.address }}</span>
+                </div>
+
+                <div class="price">₹ {{ i.price }}</div>
+
+                <div class="btn-group">
+                    <a href="{% url 'add_to_cart' i.id %}" class="btn btn-cart">
+                        🛒 Add to Cart
+                    </a>
+                    <a href="/buy/{{ i.id }}/" class="btn btn-buy">
+                        Buy Now
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div id="noResults">No items matching your selection were found.</div>
+
+    </div>
+</div>
+
+<script>
+    document.getElementById('productSearch').addEventListener('keyup', function() {
+        let filter = this.value.toLowerCase();
+        let cards = document.querySelectorAll('.product-card');
+        let resultsFound = false;
+
+        cards.forEach(card => {
+            let title = card.querySelector('.product-title').innerText.toLowerCase();
+            let category = card.querySelector('.category-tag').innerText.toLowerCase();
+            let shop = card.querySelector('.shop-name').innerText.toLowerCase();
+
+            // Filters by Product Name, Category, or Shop Name
+            if (title.includes(filter) || category.includes(filter) || shop.includes(filter)) {
+                card.style.display = "";
+                resultsFound = true;
+            } else {
+                card.style.display = "none";
+            }
+        });
+
+        const noResults = document.getElementById('noResults');
+        noResults.style.display = resultsFound ? "none" : "block";
+    });
+
+    // Buy Now Button Animation
+    document.querySelectorAll('.btn-buy').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const originalText = this.innerHTML;
+            const href = this.getAttribute('href');
+
+            // Add loading animation
+            this.innerHTML = '<span class="spinner"></span> Processing...';
+            this.classList.add('loading');
+            this.style.pointerEvents = 'none';
+
+            // Create overlay effect
+            const overlay = document.createElement('div');
+            overlay.className = 'payment-overlay';
+            overlay.innerHTML = `
+                <div class="payment-modal">
+                    <div class="payment-spinner"></div>
+                    <h3>Processing Payment...</h3>
+                    <p>Please wait while we secure your purchase</p>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+
+            // Animate overlay
+            setTimeout(() => {
+                overlay.classList.add('active');
+            }, 50);
+
+            // Redirect after animation
+            setTimeout(() => {
+                window.location.href = href;
+            }, 2000);
+        });
+    });
+
+    // Add to Cart Button Animation
+    document.querySelectorAll('.btn-cart').forEach(button => {
+        button.addEventListener('click', function(e) {
+            const originalText = this.innerHTML;
+
+            // Add loading animation
+            this.innerHTML = '<span class="spinner"></span> Adding...';
+            this.classList.add('loading');
+            this.style.pointerEvents = 'none';
+
+            // Remove animation after 1.5 seconds
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.classList.remove('loading');
+                this.style.pointerEvents = 'auto';
+            }, 1500);
+        });
+    });
+</script>
+
+<style>
+    .btn-buy.loading {
+        background: linear-gradient(135deg, #28a745, #20c997) !important;
+        animation: pulse 1.5s infinite;
+    }
+
+    .btn-buy .spinner {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255,255,255,0.3);
+        border-radius: 50%;
+        border-top-color: #fff;
+        animation: spin 1s ease-in-out infinite;
+        margin-right: 8px;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    .payment-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .payment-overlay.active {
+        opacity: 1;
+    }
+
+    .payment-modal {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        animation: modalSlideIn 0.5s ease-out;
+    }
+
+    @keyframes modalSlideIn {
+        from {
+            transform: scale(0.7) translateY(20px);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .payment-spinner {
+        width: 60px;
+        height: 60px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #28a745;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+    }
+
+    .payment-modal h3 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 24px;
+    }
+
+    .payment-modal p {
+        color: #666;
+        margin: 0;
+        font-size: 16px;
+    }
+</style>
+
+</body>
+</html>

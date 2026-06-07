@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atelier | Concierge Access</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --accent-gold: #d4af37;
+      --gold-gradient: linear-gradient(135deg, #d4af37 0%, #fcf6ba 45%, #d4af37 100%);
+      --glass: rgba(5, 5, 5, 0.95);
+      --border-gold: rgba(212, 175, 55, 0.4);
+      --text-white: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: 
+        radial-gradient(circle, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.9) 100%),
+        url("https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=2071") center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* BACK TO HOUSE NAVIGATION */
+    .back-nav {
+      position: absolute;
+      top: 40px;
+      left: 40px;
+    }
+
+    .back-link {
+      text-decoration: none;
+      color: #fff;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      opacity: 0.5;
+      transition: 0.3s;
+    }
+
+    .back-link:hover { opacity: 1; color: var(--accent-gold); }
+
+    .login-container {
+      width: 100%;
+      max-width: 420px;
+      padding: 1.5rem;
+    }
+
+    .login-form {
+      background: var(--glass);
+      padding: 60px 45px;
+      border-radius: 2px;
+      border: 1px solid var(--border-gold);
+      box-shadow: 0 50px 100px rgba(0,0,0,1);
+      text-align: center;
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      animation: vaultOpen 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    @keyframes vaultOpen {
+      from { opacity: 0; transform: scale(0.95); filter: brightness(0); }
+      to { opacity: 1; transform: scale(1); filter: brightness(1); }
+    }
+
+    .brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 700;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 6px;
+      margin-bottom: 5px;
+    }
+
+    .login-form h2 {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.2rem;
+      color: #666;
+      margin-bottom: 40px;
+      letter-spacing: 2px;
+      text-transform: capitalize;
+    }
+
+    .input-group {
+      text-align: left;
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .input-group label {
+      font-size: 9px;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 0;
+      background: transparent !important; /* Keeps background transparent */
+      border: none;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+      color: var(--text-white);
+      outline: none;
+      font-size: 14px;
+      transition: 0.4s;
+    }
+
+    .input-group input:focus {
+      border-bottom: 1px solid var(--accent-gold);
+      background: transparent !important;
+    }
+
+    /* Prevents browsers from adding a background color on Autofill */
+    .input-group input:-webkit-autofill,
+    .input-group input:-webkit-autofill:hover, 
+    .input-group input:-webkit-autofill:focus {
+      -webkit-text-fill-color: var(--text-white);
+      -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+      transition: background-color 5000s ease-in-out 0s;
+    }
+
+    .input-group input::placeholder {
+      color: #444;
+      font-size: 11px;
+    }
+
+    .btn {
+      width: 100%;
+      margin-top: 20px;
+      padding: 18px;
+      border: 1px solid var(--accent-gold);
+      background: var(--accent-gold);
+      color: #000;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      cursor: pointer;
+      transition: 0.5s;
+    }
+
+    .btn:hover {
+      background: transparent;
+      color: var(--accent-gold);
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+    }
+
+    .forgot {
+      margin-top: 30px;
+      font-size: 10px;
+      color: #444;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .forgot:hover {
+      color: var(--text-white);
+    }
+
+    .vault-line {
+      width: 40px;
+      height: 1px;
+      background: var(--accent-gold);
+      margin: 0 auto 30px auto;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="back-nav">
+  <a href="/" class="back-link">← Return to House</a>
+</div>
+
+<div class="login-container">
+  <div class="login-form">
+    <div class="brand">ATELIER</div>
+    <div class="vault-line"></div>
+    <h2>Concierge Portal</h2>
+
+    <form method="post">
+      {% csrf_token %}
+      
+      <div class="input-group">
+        <label>System Username</label>
+        <input type="text" name="username" placeholder="Administrator Identity" autocomplete="off" required>
+      </div>
+
+      <div class="input-group">
+        <label>Secret Key</label>
+        <input type="password" name="password" placeholder="••••••••••••" required>
+      </div>
+
+      <button type="submit" class="btn">Authorize Access</button>
+
+      <p class="forgot">Request Key Reset</p>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

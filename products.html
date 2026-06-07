@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATELIER | The House of Ultra-Premium Couture</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --accent-gold: #d4af37;
+  --gold-gradient: linear-gradient(135deg, #d4af37 0%, #fcf6ba 45%, #d4af37 100%);
+  --glass-dark: rgba(10, 10, 10, 0.85);
+  --border-gold: rgba(212, 175, 55, 0.3);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body {
+  background: #0a0a0a;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* --- CINEMATIC NAVBAR --- */
+nav {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  z-index: 1000;
+}
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.auth-buttons a {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: white;
+  padding: 8px 18px;
+  border-radius: 2px;
+  transition: 0.4s ease;
+}
+
+.login-btn { border: 1px solid var(--border-gold); }
+.login-btn:hover { background: var(--accent-gold); color: #000; }
+.register-btn { background: var(--accent-gold); color: #000; font-weight: 600; }
+.admin-btn { background: #333; opacity: 0.8; }
+
+/* --- HERO SECTION --- */
+.hero {
+  height: 100vh;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(10,10,10,1)),
+              url("https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-inner {
+    max-width: 800px;
+    animation: fadeInUp 1.5s ease;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 5.5rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  font-size: 14px;
+  margin-bottom: 35px;
+  color: #aaa;
+}
+
+.btn-premium {
+  padding: 18px 50px;
+  background: transparent;
+  border: 1px solid var(--accent-gold);
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.btn-premium:hover {
+  background: var(--accent-gold);
+  color: #000;
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+}
+
+/* --- SECTION GENERAL --- */
+.section { padding: 120px 60px; }
+.section h2 {
+  font-family: 'Playfair Display', serif;
+  text-align: center;
+  margin-bottom: 60px;
+  font-size: 3.2rem;
+  font-weight: 400;
+}
+
+/* --- HERITAGE SECTION --- */
+.heritage-container {
+  display: flex;
+  align-items: center;
+  gap: 100px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sub-title { color: var(--accent-gold); text-transform: uppercase; letter-spacing: 4px; font-size: 11px; }
+.heritage-text { flex: 1.2; }
+.heritage-text h2 { text-align: left; margin-top: 15px; margin-bottom: 30px; }
+.heritage-text p { color: #888; line-height: 1.8; margin-bottom: 40px; font-weight: 300; font-size: 1.05rem; }
+
+.heritage-image { flex: 1; position: relative; }
+.heritage-image img { width: 100%; border: 1px solid var(--border-gold); transition: 0.5s; }
+.heritage-image:hover img { border-color: white; transform: scale(1.02); }
+
+.stat-grid { display: flex; gap: 60px; }
+.stat-item h3 { font-family: 'Playfair Display', serif; color: var(--accent-gold); font-size: 2.5rem; }
+.stat-item p { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #555; }
+
+/* --- CATEGORY GRID --- */
+.cat-wrapper { display: flex; gap: 20px; height: 650px; }
+.cat-card { flex: 1; position: relative; overflow: hidden; transition: 0.9s cubic-bezier(0.25, 1, 0.5, 1); }
+.cat-card:hover { flex: 1.8; }
+.cat-card img { width: 100%; height: 100%; object-fit: cover; transition: 1.2s; }
+.cat-card:hover img { transform: scale(1.1); }
+.cat-overlay {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; padding: 50px;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  text-align: center;
+}
+.cat-overlay h3 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 15px; }
+.cat-overlay a { color: var(--accent-gold); text-decoration: none; font-size: 11px; text-transform: uppercase; letter-spacing: 3px; border-bottom: 1px solid var(--accent-gold); padding-bottom: 5px; }
+
+/* --- PRODUCT CARD STYLE --- */
+.products { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 50px; max-width: 1300px; margin: auto; }
+.product-card { background: transparent; transition: 0.5s; position: relative; }
+.image-container { overflow: hidden; position: relative; border: 1px solid rgba(255,255,255,0.05); }
+.product-card img { width: 100%; height: 480px; object-fit: cover; transition: 0.8s ease; }
+.product-card:hover img { transform: scale(1.05); }
+.badge { position: absolute; top: 20px; right: 20px; background: var(--glass-dark); border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 4px 15px; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; z-index: 10; }
+.product-info { padding: 30px 0; text-align: center; }
+.product-info h4 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 10px; font-weight: 400; }
+.price { color: var(--accent-gold); font-size: 1.2rem; font-weight: 300; }
+.buy-btn { margin-top: 20px; width: 100%; padding: 15px; background: #111; border: 1px solid rgba(255,255,255,0.1); color: white; text-transform: uppercase; letter-spacing: 2px; font-size: 11px; cursor: pointer; transition: 0.4s; }
+.buy-btn:hover { background: white; color: black; }
+
+/* --- NEWSLETTER --- */
+.newsletter { background: #080808; border-top: 1px solid rgba(255,255,255,0.03); text-align: center; }
+.news-content { max-width: 700px; margin: 0 auto; }
+.news-form { margin-top: 50px; display: flex; border-bottom: 1px solid var(--border-gold); }
+.news-form input { flex: 1; background: transparent; border: none; padding: 20px; color: white; outline: none; font-size: 13px; letter-spacing: 2px; }
+.news-form button { background: transparent; border: none; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 3px; font-weight: 600; cursor: pointer; padding: 0 30px; }
+
+/* --- FOOTER --- */
+footer { padding: 80px 20px; background: #050505; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; }
+footer p { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; opacity: 0.4; }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(60px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media(max-width: 900px) {
+  nav { padding: 15px 20px; }
+  .auth-buttons { display: none; }
+  .hero h1 { font-size: 3.5rem; }
+  .heritage-container { flex-direction: column; text-align: center; }
+  .heritage-text h2 { text-align: center; }
+  .cat-wrapper { flex-direction: column; height: auto; }
+  .cat-card { height: 350px; }
+  .stat-grid { justify-content: center; }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">ATELIER</div>
+  <div class="auth-buttons">
+    <a href="/shoplogin/" class="login-btn">Store Access</a>
+    <a href="/login/" class="login-btn">Sign In</a>
+    <a href="/register/" class="register-btn">Join Atelier</a>
+    <a href="/adminlogin/" class="admin-btn">Concierge</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <p>Hand-Crafted in Milan • Since 1926</p>
+    <h1>The Art of Dressing</h1>
+    <a href="/login/" style="text-decoration: none;">
+        <button class="btn-premium">Begin Experience</button>
+    </a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="heritage-container">
+    <div class="heritage-text">
+      <span class="sub-title">Our Legacy</span>
+      <h2>Craftsmanship Beyond Time</h2>
+      <p>Every Atelier creation is a testament to the master artisan. We believe that true luxury is not merely seen—it is felt. By combining century-old tailoring techniques with modern, avant-garde silhouettes, we define the future of high fashion for the discerning few.</p>
+      <div class="stat-grid">
+        <div class="stat-item">
+          <h3>100+</h3>
+          <p>Master Tailors</p>
+        </div>
+        <div class="stat-item">
+          <h3>42</h3>
+          <p>Global Boutiques</p>
+        </div>
+      </div>
+    </div>
+    <div class="heritage-image">
+      <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=1974" alt="Tailoring Details">
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>The Houses</h2>
+  <div class="cat-wrapper">
+    <div class="cat-card">
+      <img src="https://images.unsplash.com/photo-1539008835279-43468093523c?q=80&w=1287" alt="Haute Couture">
+      <div class="cat-overlay">
+        <h3>Haute Couture</h3>
+        <a href="/allproduct/">Explore Collection</a>
+      </div>
+    </div>
+    <div class="cat-card">
+      <img src="https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?q=80&w=1170" alt="Accessories">
+      <div class="cat-overlay">
+        <h3>Prêt-à-Porter</h3>
+        <a href="/allproduct/">Explore Collection</a>
+      </div>
+    </div>
+    <div class="cat-card">
+      <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=1287" alt="Evening Wear">
+      <div class="cat-overlay">
+        <h3>Evening Wear</h3>
+        <a href="/allproduct/">Explore Collection</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>The Season's Selection</h2>
+  <div class="products">
+    <div class="product-card">
+      <div class="image-container">
+          <span class="badge">Exclusive</span>
+          <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=1287">
+      </div>
+      <div class="product-info">
+        <h4>Signature Silk Gown</h4>
+        <p class="price">₹18,999</p>
+        <button class="buy-btn">Add to Collection</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="image-container">
+          <span class="badge">New Release</span>
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1320">
+      </div>
+      <div class="product-info">
+        <h4>Minimalist Summer Set</h4>
+        <p class="price">₹9,499</p>
+        <button class="buy-btn">Add to Collection</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="image-container">
+          <span class="badge">Limited</span>
+          <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=1173">
+      </div>
+      <div class="product-info">
+        <h4>Structured Atelier Coat</h4>
+        <p class="price">₹22,000</p>
+        <button class="buy-btn">Add to Collection</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section newsletter">
+  <div class="news-content">
+    <h2>The Inner Circle</h2>
+    <p>Become a member of the Atelier Circle for early access to seasonal launches and private event invitations.</p>
+    <form class="news-form" onsubmit="event.preventDefault(); alert('Membership Pending Review.');">
+      <input type="email" placeholder="ENTER YOUR EMAIL ADDRESS" required>
+      <button type="submit">Join</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 ATELIER COUTURE | THE HOUSE OF PURE ELEGANCE</p>
+</footer>
+
+</body>
+</html>

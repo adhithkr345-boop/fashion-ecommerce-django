@@ -1,0 +1,182 @@
+﻿{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Payment Failed - Adhizz{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); min-height: 80vh;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="card shadow-lg border-0" style="border-radius: 15px; overflow: hidden;">
+                    <!-- Error Header -->
+                    <div class="card-header text-white text-center py-4" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%) !important; border: none;">
+                        <div class="error-icon mb-3">
+                            <i class="fas fa-times-circle" style="font-size: 4rem; animation: shake 0.8s ease-in-out;"></i>
+                        </div>
+                        <h2 class="mb-2">Payment Failed ❌</h2>
+                        <p class="mb-0 opacity-75">We couldn't process your payment</p>
+                    </div>
+
+                    <!-- Error Details -->
+                    <div class="card-body p-4">
+                        <!-- Error Message -->
+                        <div class="alert alert-danger border-0" style="border-radius: 10px; background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);">
+                            <h6 class="alert-heading mb-2">
+                                <i class="fas fa-exclamation-triangle me-2"></i>Error Details
+                            </h6>
+                            <p class="mb-0">{{ message }}</p>
+                        </div>
+
+                        <!-- Possible Reasons -->
+                        <div class="possible-reasons mb-4">
+                            <h5 class="text-muted mb-3">
+                                <i class="fas fa-question-circle me-2"></i>What might have gone wrong?
+                            </h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <div class="reason-item p-2 bg-light rounded">
+                                        <i class="fas fa-box-open text-warning me-2"></i>
+                                        <small>Stock sold out</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <div class="reason-item p-2 bg-light rounded">
+                                        <i class="fas fa-credit-card text-danger me-2"></i>
+                                        <small>Invalid card details</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <div class="reason-item p-2 bg-light rounded">
+                                        <i class="fas fa-ban text-danger me-2"></i>
+                                        <small>Transaction declined</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <div class="reason-item p-2 bg-light rounded">
+                                        <i class="fas fa-wifi text-muted me-2"></i>
+                                        <small>Network issues</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="action-buttons">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <button onclick="window.history.back()" class="btn btn-danger btn-lg w-100">
+                                        <i class="fas fa-redo me-2"></i>Try Again
+                                    </button>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <a href="{% url 'view_cart' %}" class="btn btn-outline-secondary btn-lg w-100">
+                                        <i class="fas fa-shopping-cart me-2"></i>View Cart
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <a href="{% url 'allproduct' %}" class="btn btn-link text-muted">
+                                    <i class="fas fa-home me-1"></i>Continue Shopping
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Support Section -->
+                        <div class="support-section text-center mt-4 pt-3 border-top">
+                            <small class="text-muted">
+                                <i class="fas fa-headset me-1"></i>
+                                Need help? <a href="mailto:support@adhizz.com" class="text-decoration-none">Contact Support</a>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes shake {
+        0%, 100% {
+            transform: translateX(0);
+        }
+        10%, 30%, 50%, 70%, 90% {
+            transform: translateX(-5px);
+        }
+        20%, 40%, 60%, 80% {
+            transform: translateX(5px);
+        }
+    }
+
+    .error-icon {
+        animation: bounceIn 0.6s ease-out;
+    }
+
+    @keyframes bounceIn {
+        0% {
+            transform: scale(0.3);
+            opacity: 0;
+        }
+        50% {
+            transform: scale(1.05);
+        }
+        70% {
+            transform: scale(0.9);
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
+    }
+
+    .reason-item {
+        transition: transform 0.3s ease;
+        border: 1px solid #e9ecef;
+    }
+
+    .reason-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .btn-danger {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        border: none;
+        transition: all 0.3s;
+    }
+
+    .btn-danger:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 10px 25px rgba(220, 53, 69, 0.4) !important;
+    }
+
+    .alert-danger {
+        color: #721c24;
+    }
+
+    @media (max-width: 768px) {
+        .container-fluid {
+            padding: 20px 0 !important;
+        }
+
+        .card-body {
+            padding: 20px !important;
+        }
+
+        .action-buttons .btn {
+            margin-bottom: 10px;
+        }
+    }
+</style>
+
+{% endblock %}

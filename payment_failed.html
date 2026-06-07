@@ -1,0 +1,328 @@
+﻿{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Checkout - Adhizz{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); min-height: 80vh;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="card shadow-lg border-0" style="border-radius: 15px; overflow: hidden;">
+                    <!-- Header -->
+                    <div class="card-header bg-primary text-white text-center py-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; border: none;">
+                        <h2 class="mb-2">
+                            <i class="fas fa-credit-card me-2"></i>Secure Checkout
+                        </h2>
+                        <p class="mb-0 opacity-75">Complete your payment securely</p>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="card-body p-4">
+                        <!-- Order Summary -->
+                        <div class="order-summary mb-4">
+                            <h5 class="text-muted mb-3">
+                                <i class="fas fa-shopping-bag me-2"></i>Order Summary
+                            </h5>
+                            <div class="bg-light p-3 rounded">
+                                {% if is_cart %}
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="fw-semibold">Items in Cart</span>
+                                        <span class="text-primary fw-bold">{{ amount }} items</span>
+                                    </div>
+                                {% else %}
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="fw-semibold">{{ order.product.productname }}</span>
+                                        <span class="text-muted">Qty: {{ order.quantity }}</span>
+                                    </div>
+                                {% endif %}
+                                <hr class="my-2">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold fs-5">Total Amount</span>
+                                    <span class="text-success fw-bold fs-5">₹ {{ amount }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payment Form -->
+                        <form method="POST" id="paymentForm" action="{% url 'process_dummy_payment' %}" novalidate>
+                            {% csrf_token %}
+                            <input type="hidden" name="dummy_order_id" value="{{ order_id }}">
+
+                            <h5 class="text-muted mb-3">
+                                <i class="fas fa-lock me-2"></i>Payment Details
+                            </h5>
+
+                            <!-- Cardholder Name -->
+                            <div class="mb-3">
+                                <label for="cardholder_name" class="form-label fw-semibold">
+                                    <i class="fas fa-user me-1"></i>Cardholder Name
+                                </label>
+                                <input type="text" class="form-control form-control-lg" id="cardholder_name"
+                                       name="cardholder_name" placeholder="John Doe" required
+                                       style="border-radius: 8px; border: 2px solid #e9ecef;">
+                                <div class="invalid-feedback">
+                                    Please enter the cardholder name.
+                                </div>
+                            </div>
+
+                            <!-- Card Number -->
+                            <div class="mb-3">
+                                <label for="card_number" class="form-label fw-semibold">
+                                    <i class="fas fa-credit-card me-1"></i>Card Number
+                                </label>
+                                <input type="text" class="form-control form-control-lg" id="card_number"
+                                       name="card_number" placeholder="4532 1234 5678 9010" maxlength="19" required
+                                       style="border-radius: 8px; border: 2px solid #e9ecef;">
+                                <div class="invalid-feedback">
+                                    Please enter a valid card number.
+                                </div>
+                            </div>
+
+                            <!-- Expiry and CVV -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="expiry_date" class="form-label fw-semibold">
+                                        <i class="fas fa-calendar me-1"></i>Expiry Date
+                                    </label>
+                                    <input type="text" class="form-control form-control-lg" id="expiry_date"
+                                           name="expiry_date" placeholder="MM/YY" required
+                                           style="border-radius: 8px; border: 2px solid #e9ecef;">
+                                    <div class="invalid-feedback">
+                                        Please enter expiry date.
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="cvv" class="form-label fw-semibold">
+                                        <i class="fas fa-shield-alt me-1"></i>CVV
+                                    </label>
+                                    <input type="text" class="form-control form-control-lg" id="cvv"
+                                           name="cvv" placeholder="123" maxlength="3" required
+                                           style="border-radius: 8px; border: 2px solid #e9ecef;">
+                                    <div class="invalid-feedback">
+                                        Please enter CVV.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-lg text-white" id="paymentBtn"
+                                        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                                               border: none; border-radius: 10px; padding: 15px;
+                                               font-weight: 600; font-size: 16px; transition: all 0.3s;">
+                                    <i class="fas fa-lock me-2"></i>
+                                    <span id="btnText">Complete Payment - ₹ {{ amount }}</span>
+                                    <span id="btnLoading" style="display: none;">
+                                        <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                                        Processing...
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Security Notice -->
+                        <div class="text-center mt-4">
+                            <div class="alert alert-light border" style="border-radius: 8px;">
+                                <i class="fas fa-shield-alt text-success me-2"></i>
+                                <small class="text-muted">Your payment is secured with 256-bit SSL encryption</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
+    }
+
+    .form-control:focus {
+        border-color: #667eea !important;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25) !important;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4) !important;
+    }
+
+    .order-summary {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 10px;
+        padding: 20px;
+        border-left: 4px solid #667eea;
+    }
+
+    @media (max-width: 768px) {
+        .container-fluid {
+            padding: 20px 0 !important;
+        }
+
+        .card-body {
+            padding: 20px !important;
+        }
+    }
+
+    .processing-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .processing-overlay.active {
+        opacity: 1;
+    }
+
+    .processing-modal {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        animation: modalSlideIn 0.5s ease-out;
+        max-width: 400px;
+        width: 90%;
+    }
+
+    .processing-spinner {
+        width: 60px;
+        height: 60px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #667eea;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+    }
+
+    .processing-modal h3 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 24px;
+    }
+
+    .processing-modal p {
+        color: #666;
+        margin: 0 0 20px 0;
+        font-size: 16px;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 4px;
+        background: #f3f3f3;
+        border-radius: 2px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        width: 0%;
+        animation: progressFill 1.5s ease-out forwards;
+    }
+
+    @keyframes progressFill {
+        0% { width: 0%; }
+        100% { width: 100%; }
+    }
+</style>
+
+<script>
+    // Form validation
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('form')
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                } else {
+                    // Show loading state
+                    event.preventDefault();
+                    showLoadingState();
+
+                    // Submit form after a brief delay for UX
+                    setTimeout(function() {
+                        form.submit();
+                    }, 1500);
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+
+    function showLoadingState() {
+        const btn = document.getElementById('paymentBtn');
+        const btnText = document.getElementById('btnText');
+        const btnLoading = document.getElementById('btnLoading');
+
+        btn.disabled = true;
+        btnText.style.display = 'none';
+        btnLoading.style.display = 'inline-block';
+        btn.style.opacity = '0.8';
+
+        // Create processing overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'processing-overlay';
+        overlay.innerHTML = `
+            <div class="processing-modal">
+                <div class="processing-spinner"></div>
+                <h3>Processing Payment...</h3>
+                <p>Please wait while we process your secure payment</p>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        // Animate overlay
+        setTimeout(() => {
+            overlay.classList.add('active');
+        }, 50);
+    }
+
+    // Card number formatting
+    document.getElementById('card_number').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\s/g, '');
+        let formattedValue = value.replace(/(\d{4})/g, '$1 ').trim();
+        e.target.value = formattedValue;
+    });
+
+    // Expiry date formatting
+    document.getElementById('expiry_date').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length >= 2) {
+            value = value.slice(0, 2) + '/' + value.slice(2, 4);
+        }
+        e.target.value = value;
+    });
+
+    // CVV validation
+    document.getElementById('cvv').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        e.target.value = value;
+    });   e.target.value = value;
+    });
+</script>
+
+{% endblock %}
